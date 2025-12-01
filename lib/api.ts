@@ -1,11 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
-
-// Get token from localStorage
-const getToken = () => {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem('adminToken');
-    }
-    return null;
+return null;
 };
 
 // API client with auth
