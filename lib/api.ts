@@ -1,4 +1,11 @@
-return null;
+const API_URL = 'https://perambur-backend-production.up.railway.app';
+
+// Get token from localStorage
+const getToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('adminToken');
+    }
+    return null;
 };
 
 // API client with auth
