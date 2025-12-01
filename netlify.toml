@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NEXT_PUBLIC_API_URL = "REPLACE_WITH_RAILWAY_URL"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
