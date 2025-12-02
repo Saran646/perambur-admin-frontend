@@ -161,6 +161,11 @@ export default function AdminDashboard() {
                         <p className="text-gray-600">View and respond to customer reviews</p>
                     </Link>
 
+                    <Link href="/analytics" className="card p-6 hover:shadow-lg transition-shadow">
+                        <h3 className="text-xl font-semibold mb-2">📊 Analytics</h3>
+                        <p className="text-gray-600">Download review data and reports</p>
+                    </Link>
+
                     <Link href="/profile" className="card p-6 hover:shadow-lg transition-shadow">
                         <h3 className="text-xl font-semibold mb-2">👤 Profile</h3>
                         <p className="text-gray-600">Update your account details</p>

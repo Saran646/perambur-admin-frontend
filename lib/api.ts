@@ -184,5 +184,30 @@ export const adminApi = {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         return res.json();
+    },
+
+    // Analytics
+    analytics: {
+        getReviews: async (month: string, branchId?: string) => {
+            const token = getToken();
+            const params = new URLSearchParams({ month });
+            if (branchId && branchId !== 'all') {
+                params.append('branchId', branchId);
+            }
+            const res = await fetch(`${API_URL}/api/admin/analytics/reviews?${params}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return res.json();
+        },
+
+        exportExcel: (month: string, branchId?: string) => {
+            const token = getToken();
+            const params = new URLSearchParams({ month });
+            if (branchId && branchId !== 'all') {
+                params.append('branchId', branchId);
+            }
+            // Trigger download by opening URL with auth token
+            window.location.href = `${API_URL}/api/admin/analytics/export?${params}&token=${token}`;
+        }
     }
 };
