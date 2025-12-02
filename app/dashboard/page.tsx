@@ -89,15 +89,15 @@ export default function AdminDashboard() {
             </header>
 
             <div className="container-custom pb-12 fade-in">
-                <div className="flex justify-between items-center mb-8">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
                     <div>
                         <h2 className="text-xl font-bold mb-2">Overview</h2>
-                        <p className="text-gray-600">Manage your restaurant review platform</p>
+                        <p className="text-gray-600 text-sm sm:text-base">Manage your restaurant review platform</p>
                     </div>
 
-                    <div className="flex gap-4">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                         <select
-                            className="input-field py-2"
+                            className="input-field py-2 text-sm sm:text-base"
                             value={selectedArea}
                             onChange={(e) => {
                                 setSelectedArea(e.target.value)
@@ -111,7 +111,7 @@ export default function AdminDashboard() {
                         </select>
 
                         <select
-                            className="input-field py-2"
+                            className="input-field py-2 text-sm sm:text-base"
                             value={selectedBranch}
                             onChange={(e) => setSelectedBranch(e.target.value)}
                         >
@@ -122,7 +122,7 @@ export default function AdminDashboard() {
                         </select>
 
                         <button
-                            className="btn-primary py-2 px-4"
+                            className="btn-primary py-2 px-4 text-sm sm:text-base whitespace-nowrap"
                             onClick={() => {
                                 setLoading(true)
                                 fetchData(selectedArea, selectedBranch)
