@@ -84,20 +84,20 @@ export default function ManageBranchesPage() {
 
     return (
         <div className="container-custom py-12 fade-in">
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
                 <div>
                     <h1 className="mb-2">Manage Branches</h1>
                     <p className="text-gray-600">Add, edit, or remove branch locations</p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-2 sm:gap-4">
                     <button
-                        className="text-gray-600 hover:text-orange-600 font-medium"
+                        className="text-gray-600 hover:text-orange-600 font-medium text-sm sm:text-base"
                         onClick={() => router.push('/dashboard')}
                     >
                         Dashboard
                     </button>
                     <button
-                        className="btn-primary"
+                        className="btn-primary text-sm sm:text-base whitespace-nowrap"
                         onClick={() => router.push('/branches/new')}
                     >
                         + Add New Branch
@@ -107,23 +107,23 @@ export default function ManageBranchesPage() {
 
             {/* Branches List */}
             <div className="grid gap-6">
-                <div className="flex justify-between items-center">
-                    <h2 className="text-2xl font-bold">All Branches ({branches.length})</h2>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                    <h2 className="text-xl sm:text-2xl font-bold">All Branches ({branches.length})</h2>
                     <div className="flex bg-gray-100 p-1 rounded-lg">
                         <button
-                            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${filter === 'all' ? 'bg-white shadow-sm text-orange-600' : 'text-gray-600 hover:text-gray-900'}`}
+                            className={`px-3 sm:px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${filter === 'all' ? 'bg-white shadow-sm text-orange-600' : 'text-gray-600 hover:text-gray-900'}`}
                             onClick={() => setFilter('all')}
                         >
                             All
                         </button>
                         <button
-                            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${filter === 'active' ? 'bg-white shadow-sm text-green-600' : 'text-gray-600 hover:text-gray-900'}`}
+                            className={`px-3 sm:px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${filter === 'active' ? 'bg-white shadow-sm text-green-600' : 'text-gray-600 hover:text-gray-900'}`}
                             onClick={() => setFilter('active')}
                         >
                             Active
                         </button>
                         <button
-                            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${filter === 'inactive' ? 'bg-white shadow-sm text-red-600' : 'text-gray-600 hover:text-gray-900'}`}
+                            className={`px-3 sm:px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${filter === 'inactive' ? 'bg-white shadow-sm text-red-600' : 'text-gray-600 hover:text-gray-900'}`}
                             onClick={() => setFilter('inactive')}
                         >
                             Inactive
