@@ -208,6 +208,19 @@ export const adminApi = {
             }
             // Trigger download by opening URL with auth token
             window.location.href = `${API_URL}/api/admin/analytics/export?${params}&token=${token}`;
+        },
+
+        updateComplaintStatus: async (reviewId: string, data: { status: 'open' | 'closed', remarks?: string }) => {
+            const token = getToken();
+            const res = await fetch(`${API_URL}/api/admin/analytics/complaints/${reviewId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
+            });
+            return res.json();
         }
     }
 };

@@ -28,6 +28,10 @@ interface Review {
         city: string
         area: string
     }
+    complaintStatus?: 'open' | 'closed'
+    adminRemarks?: string
+    complaintResolvedAt?: string
+    complaintResolvedBy?: string
 }
 
 interface Branch {
@@ -99,6 +103,50 @@ export default function AnalyticsPage() {
             return
         }
         adminApi.analytics.exportExcel(selectedMonth, selectedBranch)
+    }
+
+    const handleStatusChange = async (reviewId: string, newStatus: 'open' | 'closed') => {
+        try {
+            const review = reviews.find(r => r.id === reviewId)
+            if (!review) return
+
+            const result = await adminApi.analytics.updateComplaintStatus(reviewId, {
+                status: newStatus,
+                remarks: review.adminRemarks
+            })
+
+            if (result.success) {
+                setReviews(reviews.map(r =>
+                    r.id === reviewId ? { ...r, complaintStatus: newStatus } : r
+                ))
+            } else {
+                alert('Failed to update status')
+            }
+        } catch (error) {
+            console.error('Failed to update status', error)
+            alert('Failed to update status')
+        }
+    }
+
+    const handleRemarksSave = async (reviewId: string, remarks: string) => {
+        try {
+            const review = reviews.find(r => r.id === reviewId)
+            if (!review) return
+
+            const result = await adminApi.analytics.updateComplaintStatus(reviewId, {
+                status: review.complaintStatus || 'open',
+                remarks: remarks
+            })
+
+            if (result.success) {
+                alert('Remarks saved successfully')
+            } else {
+                alert('Failed to save remarks')
+            }
+        } catch (error) {
+            console.error('Failed to save remarks', error)
+            alert('Failed to save remarks')
+        }
     }
 
     // Generate list of months (last 12 months)
@@ -205,6 +253,8 @@ export default function AnalyticsPage() {
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rating</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Review</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Remarks</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
@@ -237,47 +287,97 @@ export default function AnalyticsPage() {
                                         <td className="px-4 py-3 text-sm whitespace-nowrap">
                                             {review.visitType.replace('_', ' ')}
                                         </td>
-                                        <td className="px-4 py-3 text-sm max-w-xs">
                                             <div className="truncate">{review.reviewText}</div>
+                                        </td>
+                                        <td className="px-4 py-3 text-sm">
+                                            {review.overallRating <= 3 ? (
+                                                <select
+                                                    className={`text-xs font-medium rounded px-2 py-1 border ${
+                                                        (review.complaintStatus || 'open') === 'open' 
+                                                            ? 'bg-red-50 text-red-700 border-red-200' 
+                                                            : 'bg-green-50 text-green-700 border-green-200'
+                                                    }`}
+                                                    value={review.complaintStatus || 'open'}
+                                                    onChange={(e) => handleStatusChange(review.id, e.target.value as 'open' | 'closed')}
+                                                >
+                                                    <option value="open">Open</option>
+                                                    <option value="closed">Closed</option>
+                                                </select>
+                                            ) : (
+                                                <span className="text-gray-400 text-xs">-</span>
+                                            )}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm min-w-[200px]">
+                                            {review.overallRating <= 3 ? (
+                                                <div className="flex gap-2">
+                                                    <textarea
+                                                        className="w-full text-xs p-1 border rounded resize-none focus:ring-1 focus:ring-orange-500 outline-none"
+                                                        rows={2}
+                                                        placeholder="Add remarks..."
+                                                        defaultValue={review.adminRemarks || ''}
+                                                        onBlur={(e) => {
+                                                            if (e.target.value !== review.adminRemarks) {
+                                                                // Update local state first to avoid jumping
+                                                                const newReviews = reviews.map(r => 
+                                                                    r.id === review.id ? { ...r, adminRemarks: e.target.value } : r
+                                                                )
+                                                                setReviews(newReviews)
+                                                            }
+                                                        }}
+                                                    />
+                                                    <button
+                                                        onClick={() => handleRemarksSave(review.id, review.adminRemarks || '')}
+                                                        className="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded text-xs h-fit"
+                                                        title="Save Remarks"
+                                                    >
+                                                        💾
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <span className="text-gray-400 text-xs">-</span>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
+                </div>
 
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                        <div className="flex justify-center items-center gap-4 mt-6">
-                            <button
-                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                                disabled={currentPage === 1}
-                                className="btn-secondary disabled:opacity-50"
-                            >
-                                Previous
-                            </button>
-                            <span className="text-gray-600">
-                                Page {currentPage} of {totalPages}
-                            </span>
-                            <button
-                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                                disabled={currentPage === totalPages}
-                                className="btn-secondary disabled:opacity-50"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    )}
-                </>
-            )}
-
-            {/* No Results */}
-            {!loading && reviews.length === 0 && selectedMonth && (
-                <div className="card p-12 text-center">
-                    <p className="text-gray-500 text-lg">No reviews found for the selected filters</p>
-                    <p className="text-gray-400 text-sm mt-2">Try selecting a different month or branch</p>
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 mt-6">
+                    <button
+                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                        disabled={currentPage === 1}
+                        className="btn-secondary disabled:opacity-50"
+                    >
+                        Previous
+                    </button>
+                    <span className="text-gray-600">
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                        disabled={currentPage === totalPages}
+                        className="btn-secondary disabled:opacity-50"
+                    >
+                        Next
+                    </button>
                 </div>
             )}
+        </>
+    )
+}
+
+{/* No Results */ }
+{
+    !loading && reviews.length === 0 && selectedMonth && (
+        <div className="card p-12 text-center">
+            <p className="text-gray-500 text-lg">No reviews found for the selected filters</p>
+            <p className="text-gray-400 text-sm mt-2">Try selecting a different month or branch</p>
         </div>
+    )
+}
+        </div >
     )
 }
