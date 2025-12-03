@@ -278,8 +278,8 @@ export default function AnalyticsPage() {
                                         </td>
                                         <td className="px-4 py-3 text-sm">
                                             <span className={`px-2 py-1 rounded text-xs font-medium ${review.overallRating >= 4 ? 'bg-green-100 text-green-800' :
-                                                    review.overallRating === 3 ? 'bg-yellow-100 text-yellow-800' :
-                                                        'bg-red-100 text-red-800'
+                                                review.overallRating === 3 ? 'bg-yellow-100 text-yellow-800' :
+                                                    'bg-red-100 text-red-800'
                                                 }`}>
                                                 {review.overallRating}/5
                                             </span>
@@ -287,16 +287,16 @@ export default function AnalyticsPage() {
                                         <td className="px-4 py-3 text-sm whitespace-nowrap">
                                             {review.visitType.replace('_', ' ')}
                                         </td>
+                                        <td className="px-4 py-3 text-sm max-w-xs">
                                             <div className="truncate">{review.reviewText}</div>
                                         </td>
                                         <td className="px-4 py-3 text-sm">
                                             {review.overallRating <= 3 ? (
                                                 <select
-                                                    className={`text-xs font-medium rounded px-2 py-1 border ${
-                                                        (review.complaintStatus || 'open') === 'open' 
-                                                            ? 'bg-red-50 text-red-700 border-red-200' 
+                                                    className={`text-xs font-medium rounded px-2 py-1 border ${(review.complaintStatus || 'open') === 'open'
+                                                            ? 'bg-red-50 text-red-700 border-red-200'
                                                             : 'bg-green-50 text-green-700 border-green-200'
-                                                    }`}
+                                                        }`}
                                                     value={review.complaintStatus || 'open'}
                                                     onChange={(e) => handleStatusChange(review.id, e.target.value as 'open' | 'closed')}
                                                 >
@@ -318,7 +318,7 @@ export default function AnalyticsPage() {
                                                         onBlur={(e) => {
                                                             if (e.target.value !== review.adminRemarks) {
                                                                 // Update local state first to avoid jumping
-                                                                const newReviews = reviews.map(r => 
+                                                                const newReviews = reviews.map(r =>
                                                                     r.id === review.id ? { ...r, adminRemarks: e.target.value } : r
                                                                 )
                                                                 setReviews(newReviews)
@@ -339,45 +339,45 @@ export default function AnalyticsPage() {
                                         </td>
                                     </tr>
                                 ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-4 mt-6">
-                    <button
-                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                        disabled={currentPage === 1}
-                        className="btn-secondary disabled:opacity-50"
-                    >
-                        Previous
-                    </button>
-                    <span className="text-gray-600">
-                        Page {currentPage} of {totalPages}
-                    </span>
-                    <button
-                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                        disabled={currentPage === totalPages}
-                        className="btn-secondary disabled:opacity-50"
-                    >
-                        Next
-                    </button>
-                </div>
-            )}
-        </>
-    )
-}
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                        <div className="flex justify-center items-center gap-4 mt-6">
+                            <button
+                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                disabled={currentPage === 1}
+                                className="btn-secondary disabled:opacity-50"
+                            >
+                                Previous
+                            </button>
+                            <span className="text-gray-600">
+                                Page {currentPage} of {totalPages}
+                            </span>
+                            <button
+                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                disabled={currentPage === totalPages}
+                                className="btn-secondary disabled:opacity-50"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
+                </>
+            )
+            }
 
-{/* No Results */ }
-{
-    !loading && reviews.length === 0 && selectedMonth && (
-        <div className="card p-12 text-center">
-            <p className="text-gray-500 text-lg">No reviews found for the selected filters</p>
-            <p className="text-gray-400 text-sm mt-2">Try selecting a different month or branch</p>
-        </div>
-    )
-}
+            {/* No Results */}
+            {
+                !loading && reviews.length === 0 && selectedMonth && (
+                    <div className="card p-12 text-center">
+                        <p className="text-gray-500 text-lg">No reviews found for the selected filters</p>
+                        <p className="text-gray-400 text-sm mt-2">Try selecting a different month or branch</p>
+                    </div>
+                )
+            }
         </div >
     )
 }
