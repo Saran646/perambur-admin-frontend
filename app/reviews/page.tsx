@@ -268,12 +268,11 @@ export default function AdminReviewsPage() {
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full">
                                         <span className="text-2xl">
-                                            {review.overallRating === 1 ? '😠' :
-                                                review.overallRating === 2 ? '☹️' :
-                                                    review.overallRating === 3 ? '😐' :
-                                                        review.overallRating === 4 ? '🙂' : '😍'}
+                                            {review.overallRating === 1 ? '🙁' :
+                                                review.overallRating === 2 ? '😐' :
+                                                    review.overallRating === 3 ? '😊' : '😍'}
                                         </span>
-                                        <span className="font-bold text-gray-900">{review.overallRating}/5</span>
+                                        <span className="font-bold text-gray-900">{review.overallRating}/4</span>
                                     </div>
                                     <button
                                         onClick={() => handleDeleteReview(review.id)}
@@ -307,11 +306,11 @@ export default function AdminReviewsPage() {
 
                             {(review.tasteRating || review.serviceRating || review.ambienceRating || review.cleanlinessRating || review.valueRating) && (
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                                    {review.tasteRating && <div>Taste: {review.tasteRating}/5</div>}
-                                    {review.serviceRating && <div>Service: {review.serviceRating}/5</div>}
-                                    {review.ambienceRating && <div>Ambience: {review.ambienceRating}/5</div>}
-                                    {review.cleanlinessRating && <div>Cleanliness: {review.cleanlinessRating}/5</div>}
-                                    {review.valueRating && <div>Value: {review.valueRating}/5</div>}
+                                    {review.tasteRating && <div>Taste: {review.tasteRating}/4</div>}
+                                    {review.serviceRating && <div>Service: {review.serviceRating}/4</div>}
+                                    {review.ambienceRating && <div>Ambience: {review.ambienceRating}/4</div>}
+                                    {review.cleanlinessRating && <div>Cleanliness: {review.cleanlinessRating}/4</div>}
+                                    {review.valueRating && <div>Value: {review.valueRating}/4</div>}
                                 </div>
                             )}
 

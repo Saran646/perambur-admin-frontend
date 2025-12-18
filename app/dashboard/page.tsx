@@ -145,7 +145,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="card p-6">
                             <p className="text-gray-600 text-sm mb-1">Average Rating</p>
-                            <p className="text-4xl font-bold text-orange-600">{stats.averageRating.toFixed(1)}</p>
+                            <p className="text-4xl font-bold text-orange-600">{stats.averageRating.toFixed(1)}/4</p>
                         </div>
                     </div>
                 )}

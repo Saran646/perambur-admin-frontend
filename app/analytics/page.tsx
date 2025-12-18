@@ -280,11 +280,11 @@ export default function AnalyticsPage() {
                                             {review.guestPhone || '-'}
                                         </td>
                                         <td className="px-4 py-3 text-sm">
-                                            <span className={`px-2 py-1 rounded text-xs font-medium ${review.overallRating >= 4 ? 'bg-green-100 text-green-800' :
-                                                review.overallRating === 3 ? 'bg-yellow-100 text-yellow-800' :
+                                            <span className={`px-2 py-1 rounded text-xs font-medium ${review.overallRating >= 3 ? 'bg-green-100 text-green-800' :
+                                                review.overallRating === 2 ? 'bg-yellow-100 text-yellow-800' :
                                                     'bg-red-100 text-red-800'
                                                 }`}>
-                                                {review.overallRating}/5
+                                                {review.overallRating}/4
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-sm whitespace-nowrap">
@@ -298,7 +298,7 @@ export default function AnalyticsPage() {
                                             </div>
                                         </td>
                                         <td className="px-4 py-3 text-sm">
-                                            {review.overallRating <= 3 ? (
+                                            {review.overallRating <= 2 ? (
                                                 <select
                                                     className={`text-xs font-medium rounded px-2 py-1 border ${(review.complaintStatus || 'open') === 'open'
                                                         ? 'bg-red-50 text-red-700 border-red-200'
@@ -315,7 +315,7 @@ export default function AnalyticsPage() {
                                             )}
                                         </td>
                                         <td className="px-4 py-3 text-sm min-w-[200px]">
-                                            {review.overallRating <= 3 ? (
+                                            {review.overallRating <= 2 ? (
                                                 <div className="flex gap-2">
                                                     <textarea
                                                         className="w-full text-xs p-1 border rounded resize-none focus:ring-1 focus:ring-orange-500 outline-none"
