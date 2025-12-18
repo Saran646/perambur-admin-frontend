@@ -21,9 +21,12 @@ interface Review {
     ambienceRating?: number
     cleanlinessRating?: number
     valueRating?: number
-    reviewText: string
     visitType: 'DINE_IN' | 'TAKEAWAY' | 'DELIVERY'
     tableNumber?: string
+    visitDate?: string
+    whatLiked?: string
+    whatImprove?: string
+    wouldRecommend?: string
     guestName?: string
     guestPhone?: string
     guestEmail?: string
@@ -281,8 +284,25 @@ export default function AdminReviewsPage() {
                                 </div>
                             </div>
 
-                            <div className="mb-4">
-                                <p className="text-gray-700 whitespace-pre-wrap">{review.reviewText}</p>
+                            <div className="mb-4 space-y-3">
+                                {review.visitDate && (
+                                    <p className="text-sm text-gray-600">📅 Visit Date: {new Date(review.visitDate).toLocaleDateString()}</p>
+                                )}
+                                {review.whatLiked && (
+                                    <div className="bg-green-50 p-3 rounded-lg">
+                                        <p className="text-sm font-semibold text-green-900 mb-1">What they liked:</p>
+                                        <p className="text-gray-700 whitespace-pre-wrap">{review.whatLiked}</p>
+                                    </div>
+                                )}
+                                {review.whatImprove && (
+                                    <div className="bg-yellow-50 p-3 rounded-lg">
+                                        <p className="text-sm font-semibold text-yellow-900 mb-1">Suggested improvements:</p>
+                                        <p className="text-gray-700 whitespace-pre-wrap">{review.whatImprove}</p>
+                                    </div>
+                                )}
+                                {review.wouldRecommend && (
+                                    <p className="text-sm text-gray-600">💬 Would recommend: <strong>{review.wouldRecommend}</strong></p>
+                                )}
                             </div>
 
                             {(review.tasteRating || review.serviceRating || review.ambienceRating || review.cleanlinessRating || review.valueRating) && (

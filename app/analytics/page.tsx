@@ -13,9 +13,12 @@ interface Review {
     ambienceRating?: number
     cleanlinessRating?: number
     valueRating?: number
-    reviewText: string
     visitType: string
     tableNumber?: string
+    visitDate?: string
+    whatLiked?: string
+    whatImprove?: string
+    wouldRecommend?: string
     guestName?: string
     guestPhone?: string
     guestEmail?: string
@@ -288,14 +291,18 @@ export default function AnalyticsPage() {
                                             {review.visitType.replace('_', ' ')}
                                         </td>
                                         <td className="px-4 py-3 text-sm max-w-xs">
-                                            <div className="truncate">{review.reviewText}</div>
+                                            <div className="truncate">
+                                                {review.whatLiked && `✅ ${review.whatLiked.substring(0, 50)}...`}
+                                                {review.whatImprove && ` ⚠️ ${review.whatImprove.substring(0, 50)}...`}
+                                                {review.wouldRecommend && ` (${review.wouldRecommend})`}
+                                            </div>
                                         </td>
                                         <td className="px-4 py-3 text-sm">
                                             {review.overallRating <= 3 ? (
                                                 <select
                                                     className={`text-xs font-medium rounded px-2 py-1 border ${(review.complaintStatus || 'open') === 'open'
-                                                            ? 'bg-red-50 text-red-700 border-red-200'
-                                                            : 'bg-green-50 text-green-700 border-green-200'
+                                                        ? 'bg-red-50 text-red-700 border-red-200'
+                                                        : 'bg-green-50 text-green-700 border-green-200'
                                                         }`}
                                                     value={review.complaintStatus || 'open'}
                                                     onChange={(e) => handleStatusChange(review.id, e.target.value as 'open' | 'closed')}
