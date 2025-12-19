@@ -21,6 +21,7 @@ interface Review {
     ambienceRating?: number
     cleanlinessRating?: number
     valueRating?: number
+    experienceRating?: number
     visitType: 'DINE_IN' | 'TAKEAWAY' | 'DELIVERY'
     tableNumber?: string
     visitDate?: string
@@ -304,13 +305,14 @@ export default function AdminReviewsPage() {
                                 )}
                             </div>
 
-                            {(review.tasteRating || review.serviceRating || review.ambienceRating || review.cleanlinessRating || review.valueRating) && (
+                            {(review.tasteRating || review.serviceRating || review.ambienceRating || review.cleanlinessRating || review.valueRating || review.experienceRating) && (
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
                                     {review.tasteRating && <div>Taste: {review.tasteRating}/4</div>}
                                     {review.serviceRating && <div>Service: {review.serviceRating}/4</div>}
                                     {review.ambienceRating && <div>Ambience: {review.ambienceRating}/4</div>}
                                     {review.cleanlinessRating && <div>Cleanliness: {review.cleanlinessRating}/4</div>}
                                     {review.valueRating && <div>Value: {review.valueRating}/4</div>}
+                                    {review.experienceRating && <div>Experience: {review.experienceRating}/4</div>}
                                 </div>
                             )}
 

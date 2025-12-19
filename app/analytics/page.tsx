@@ -13,6 +13,7 @@ interface Review {
     ambienceRating?: number
     cleanlinessRating?: number
     valueRating?: number
+    experienceRating?: number
     visitType: string
     tableNumber?: string
     visitDate?: string
@@ -254,6 +255,7 @@ export default function AnalyticsPage() {
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Guest</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rating</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Exp</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Review</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
@@ -286,6 +288,11 @@ export default function AnalyticsPage() {
                                                 }`}>
                                                 {review.overallRating}/4
                                             </span>
+                                        </td>
+                                        <td className="px-4 py-3 text-sm">
+                                            {review.experienceRating ? (
+                                                <span className="text-gray-700 font-medium">{review.experienceRating}/4</span>
+                                            ) : '-'}
                                         </td>
                                         <td className="px-4 py-3 text-sm whitespace-nowrap">
                                             {review.visitType.replace('_', ' ')}
