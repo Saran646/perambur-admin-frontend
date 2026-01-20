@@ -92,7 +92,7 @@ export default function MenusPage() {
                                     </span>
                                     <div className="flex gap-2">
                                         <button
-                                            onClick={() => router.push(`/menus/${item.id}/edit`)}
+                                            onClick={() => router.push(`/menus/edit?id=${item.id}`)}
                                             className="btn-secondary text-sm flex-1"
                                         >
                                             Edit

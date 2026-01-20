@@ -155,7 +155,7 @@ export default function ManageBranchesPage() {
                                     <div className="flex gap-2">
                                         <button
                                             className="btn-secondary text-sm py-2 px-4"
-                                            onClick={() => router.push(`/branches/${branch.id}/edit`)}
+                                            onClick={() => router.push(`/branches/edit?id=${branch.id}`)}
                                         >
                                             Edit
                                         </button>
